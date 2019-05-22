@@ -1,0 +1,22 @@
+{
+  "name": "hex-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typesafe-hapi": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.2",
+    "nodemon": "^1.19.0",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  }
+}
