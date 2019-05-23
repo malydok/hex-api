@@ -1,5 +1,6 @@
 import * as Crypto from 'crypto';
 import * as Hapi from 'typesafe-hapi';
+import * as Joi from 'typesafe-joi';
 
 interface Room {
   id: string;
@@ -8,7 +9,7 @@ interface Room {
 const rooms: Room[] = [];
 
 const init = async () => {
-  const server = Hapi.server({
+  const server = new Hapi.Server({
     port: 3000,
     host: 'localhost',
   });
@@ -31,7 +32,17 @@ const init = async () => {
   server.route({
     method: 'GET',
     path: '/room/{roomId}',
+    options: {
+      validate: {
+        params: {
+          roomId: Joi.string().required(),
+        },
+      },
+    },
     handler(request, h) {
+      if (!request.params) {
+        return;
+      }
       const roomId = request.params.roomId;
       const possibleRoom = rooms.find(room => room.id === roomId);
       if (possibleRoom) {
