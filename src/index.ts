@@ -43,7 +43,7 @@ const init = async () => {
         onUnsubscribe(socket: Socket, path: string) {
           console.log(`player left /room/${roomId}: ${socket.id}`);
           newRoom.players = newRoom.players.filter(
-            player => player !== socket.id
+            player => player !== socket.id,
           );
           server.publish(`/room/${roomId}`, {
             type: 'PLAYER_LEFT',
