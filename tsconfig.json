@@ -17,6 +17,6 @@
       "joi": ["node_modules/typesafe-joi"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "index.d.ts"],
   "exclude": ["node_modules"]
 }

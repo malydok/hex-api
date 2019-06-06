@@ -56,8 +56,14 @@ const init = async () => {
     },
   });
 
+  server.subscription('/');
+
   await server.start();
   console.log('Server running on %s', server.info.uri);
+
+  setInterval(() => {
+    server.publish('/', { id: 5, status: 'complete', updater: 'john' });
+  }, 1000);
 };
 
 process.on('unhandledRejection', err => {
