@@ -1,6 +1,7 @@
-import * as Crypto from 'crypto';
+import * as UUID from 'uuid';
 import * as Hapi from 'typesafe-hapi';
 import * as Joi from 'typesafe-joi';
+import * as Nes from '@hapi/nes';
 
 interface Room {
   id: string;
@@ -13,12 +14,13 @@ const init = async () => {
     port: 3000,
     host: 'localhost',
   });
+  await server.register(Nes as any);
 
   server.route({
     method: 'GET',
-    path: '/createRoom',
+    path: '/room/create',
     handler(request, h) {
-      const roomId = Crypto.createHash('sha1').digest('hex');
+      const roomId = UUID.v4();
       const newRoom = {
         id: roomId,
         players: [],
@@ -46,7 +48,8 @@ const init = async () => {
       const roomId = request.params.roomId;
       const possibleRoom = rooms.find(room => room.id === roomId);
       if (possibleRoom) {
-        possibleRoom.players.push('player1');
+        const newPlayer = UUID.v4();
+        possibleRoom.players.push(newPlayer);
         return JSON.stringify(possibleRoom);
       }
       return 'No such room!';
