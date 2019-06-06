@@ -2,6 +2,7 @@ import * as UUID from 'uuid';
 import * as Hapi from 'typesafe-hapi';
 import * as Joi from 'typesafe-joi';
 import * as Nes from '@hapi/nes';
+import { Socket, ServerSubscriptionOptions } from '@hapi/nes';
 
 interface Room {
   id: string;
@@ -21,13 +22,37 @@ const init = async () => {
     path: '/room/create',
     handler(request, h) {
       const roomId = UUID.v4();
-      const newRoom = {
+      const newRoom: Room = {
         id: roomId,
         players: [],
       };
       rooms.push(newRoom);
-      console.log('New room created', newRoom);
-      return h.redirect(`/room/${roomId}`);
+      console.log('room created', roomId);
+
+      server.subscription(`/room/${roomId}`, {
+        onSubscribe(socket: Socket, path: string) {
+          console.log(`player entered /room/${roomId}: ${socket.id}`);
+          if (newRoom.players.length < 2) {
+            newRoom.players.push(socket.id);
+            server.publish(`/room/${roomId}`, {
+              type: 'PLAYER_JOINED',
+              playerId: socket.id,
+            });
+          }
+        },
+        onUnsubscribe(socket: Socket, path: string) {
+          console.log(`player left /room/${roomId}: ${socket.id}`);
+          newRoom.players = newRoom.players.filter(
+            player => player !== socket.id
+          );
+          server.publish(`/room/${roomId}`, {
+            type: 'PLAYER_LEFT',
+            playerId: socket.id,
+          });
+        },
+      } as ServerSubscriptionOptions);
+
+      return { roomId };
     },
   });
 
@@ -48,22 +73,14 @@ const init = async () => {
       const roomId = request.params.roomId;
       const possibleRoom = rooms.find(room => room.id === roomId);
       if (possibleRoom) {
-        const newPlayer = UUID.v4();
-        possibleRoom.players.push(newPlayer);
-        return JSON.stringify(possibleRoom);
+        return { possibleRoom };
       }
-      return 'No such room!';
+      return 'No such room idiot!';
     },
   });
 
-  server.subscription('/');
-
   await server.start();
   console.log('Server running on %s', server.info.uri);
-
-  setInterval(() => {
-    server.publish('/', { id: 5, status: 'complete', updater: 'john' });
-  }, 1000);
 };
 
 process.on('unhandledRejection', err => {
