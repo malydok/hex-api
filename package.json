@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm:watch-ts\" \"npm:watch-node\"",
+    "start": "tsc && concurrently \"npm:watch-ts\" \"npm:watch-node\"",
     "watch-ts": "tsc -w",
     "watch-node": "nodemon dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
