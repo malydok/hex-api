@@ -1,14 +1,18 @@
+import { Game, createGame } from './game';
+
 export interface Room {
   id: string;
   players: string[];
+  game: Game;
 }
 
-export const rooms: Room[] = [];
+const rooms: Room[] = [];
 
 export const addRoom = (id: string) =>
   void rooms.push({
     id,
     players: [],
+    game: createGame(),
   });
 
 export const getRoom = (id: string) => rooms.find(room => room.id === id);

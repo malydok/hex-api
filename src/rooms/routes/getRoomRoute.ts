@@ -1,6 +1,7 @@
 import * as Hapi from 'typesafe-hapi';
 import * as Joi from 'typesafe-joi';
-import { getRoom, rooms } from '../rooms';
+import Boom from '@hapi/boom';
+import { getRoom } from '../rooms';
 
 export const getRoomRoute = (server: Hapi.Server) => {
   server.route({
@@ -19,18 +20,10 @@ export const getRoomRoute = (server: Hapi.Server) => {
       }
       const roomId = request.params.roomId;
       const possibleRoom = getRoom(roomId);
-      if (possibleRoom) {
-        return possibleRoom;
+      if (!possibleRoom) {
+        return Boom.notFound('No such room!');
       }
-      return 'No such room idiot!';
-    },
-  });
-
-  server.route({
-    method: 'GET',
-    path: '/room',
-    handler() {
-      return rooms;
+      return possibleRoom;
     },
   });
 };
