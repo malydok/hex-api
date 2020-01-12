@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hapi/boom": "^9.0.0",
+    "@hapi/boom": "^7.4.11",
     "@hapi/hapi": "^18.4.0",
     "@hapi/nes": "^11.2.2",
     "typesafe-hapi": "^4.0.1",
