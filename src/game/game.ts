@@ -1,26 +1,17 @@
-import { Game, Board, SelectFieldArgs } from './game.types';
+import { Game, SelectFieldArgs, Board } from './game.types';
+import { checkWinner } from './checkWinner';
 
-const SIZE = 11;
+export const SIZE = 11;
+
+export const createBoard = (): Board =>
+  Array.from({ length: SIZE }, () =>
+    Array.from({ length: SIZE }, () => undefined),
+  );
 
 export const createGame = (): Game => ({
-  board: Array.from({ length: SIZE }, () =>
-    Array.from({ length: SIZE }, () => undefined),
-  ),
+  board: createBoard(),
   turn: 'player1',
 });
-
-const checkPlayer1 = (board: Board) => {
-  const startRow = board[0];
-  if (!startRow.includes('player1')) {
-    return false;
-  }
-
-  return false;
-};
-
-const checkWinConditions = (game: Game) => {
-  checkPlayer1(game.board);
-};
 
 export const selectField = ({
   game,
@@ -33,5 +24,8 @@ export const selectField = ({
   }
   game.board[rowIndex][fieldIndex] = player;
   game.turn = player === 'player1' ? 'player2' : 'player1';
+  if (checkWinner(game.board, player)) {
+    game.winner = player;
+  }
   return game;
 };

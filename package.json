@@ -7,7 +7,7 @@
     "start": "tsc && concurrently \"npm:watch-ts\" \"npm:watch-node\"",
     "watch-ts": "tsc -w",
     "watch-node": "nodemon dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -22,10 +22,13 @@
   },
   "devDependencies": {
     "@types/hapi__nes": "^11.0.3",
+    "@types/jest": "^24.9.1",
     "@types/node": "^13.1.4",
     "@types/uuid": "^3.4.6",
     "concurrently": "^5.0.2",
+    "jest": "^25.1.0",
     "nodemon": "^2.0.2",
+    "ts-jest": "^25.0.0",
     "tslint": "^5.20.1",
     "typescript": "^3.7.4"
   }
