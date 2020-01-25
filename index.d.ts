@@ -7,11 +7,11 @@ declare module 'typesafe-hapi' {
     publish(
       path: string,
       message: any,
-      options?: nes.ServerPublishOptions
+      options?: nes.ServerPublishOptions,
     ): void;
     eachSocket(
       each: (socket: nes.Socket) => void,
-      options?: nes.ServerEachSocketOptions
+      options?: nes.ServerEachSocketOptions,
     ): void;
   }
 }

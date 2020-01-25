@@ -1,11 +1,5 @@
-import { Game, createGame } from './game';
-
-export interface Room {
-  id: string;
-  player1: string | null;
-  player2: string | null;
-  game: Game;
-}
+import { Room } from './room.types';
+import { createGame } from '../game/game';
 
 const rooms: Room[] = [];
 

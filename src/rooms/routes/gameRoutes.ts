@@ -3,7 +3,7 @@ import * as Joi from 'typesafe-joi';
 import Boom from '@hapi/boom';
 import { GAME_UPDATE } from '../roomEvents';
 import { getRoom } from '../rooms';
-import { selectField } from '../game';
+import { selectField } from '../../game/game';
 
 export const gameRoutes = (server: Hapi.Server) => {
   server.route({

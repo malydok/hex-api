@@ -1,6 +1,6 @@
 import * as Hapi from 'typesafe-hapi';
 import * as Nes from '@hapi/nes';
-import { addRoomRoutes } from './rooms';
+import { addRoomRoutes } from './rooms/addRoomRoutes';
 
 export const startServer = async () => {
   const server = new Hapi.Server({

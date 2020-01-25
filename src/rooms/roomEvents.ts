@@ -1,5 +1,5 @@
-import { Game } from './game';
-import { Room } from './rooms';
+import { Room } from './room.types';
+import { Game } from '../game/game.types';
 
 export const PLAYER_JOINED = (room: Room) => ({
   type: 'PLAYER_JOINED',
