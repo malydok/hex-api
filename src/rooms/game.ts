@@ -6,7 +6,7 @@ type SelectFieldArgs = {
   game: Game;
   rowIndex: number;
   fieldIndex: number;
-  client: string;
+  player: string;
 };
 
 export const createGame = (): Game =>
@@ -18,8 +18,8 @@ export const selectField = ({
   game,
   rowIndex,
   fieldIndex,
-  client,
+  player,
 }: SelectFieldArgs) => {
-  game[rowIndex][fieldIndex] = client;
+  game[rowIndex][fieldIndex] = player;
   return game;
 };

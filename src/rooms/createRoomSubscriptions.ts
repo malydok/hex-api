@@ -11,8 +11,8 @@ export const createRoomSubscriptions = (
     onSubscribe(socket: Socket, path: string) {
       console.log(`player entered /room/${roomId}: ${socket.id}`);
       try {
-        addPlayer(roomId, socket.id);
-        server.publish(`/room/${roomId}`, PLAYER_JOINED(socket.id));
+        const room = addPlayer(roomId, socket.id);
+        server.publish(`/room/${roomId}`, PLAYER_JOINED(room));
       } catch (error) {
         console.log(error.message);
       }
@@ -20,8 +20,8 @@ export const createRoomSubscriptions = (
     onUnsubscribe(socket: Socket, path: string) {
       console.log(`player left /room/${roomId}: ${socket.id}`);
       try {
-        removePlayer(roomId, socket.id);
-        server.publish(`/room/${roomId}`, PLAYER_LEFT(socket.id));
+        const room = removePlayer(roomId, socket.id);
+        server.publish(`/room/${roomId}`, PLAYER_LEFT(room));
       } catch (error) {
         console.log(error.message);
       }

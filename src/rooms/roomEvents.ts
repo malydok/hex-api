@@ -1,12 +1,13 @@
 import { Game } from './game';
+import { Room } from './rooms';
 
-export const PLAYER_JOINED = (playerId: string) => ({
+export const PLAYER_JOINED = (room: Room) => ({
   type: 'PLAYER_JOINED',
-  playerId,
+  payload: room,
 });
-export const PLAYER_LEFT = (playerId: string) => ({
+export const PLAYER_LEFT = (room: Room) => ({
   type: 'PLAYER_LEFT',
-  playerId,
+  payload: room,
 });
 
 export const CHAT_MESSAGE = (payload: { message: string; client: string }) => ({

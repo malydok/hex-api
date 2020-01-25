@@ -26,13 +26,16 @@ export const gameRoutes = (server: Hapi.Server) => {
         return;
       }
       const roomId = request.params.roomId;
+      const { rowIndex, fieldIndex, client } = request.payload;
       const possibleRoom = getRoom(roomId);
       if (!possibleRoom) {
         return Boom.notFound('No such room!');
       }
       const updatedGame = selectField({
         game: possibleRoom.game,
-        ...request.payload,
+        player: possibleRoom.player1 === client ? 'player1' : 'player2',
+        rowIndex,
+        fieldIndex,
       });
       server.publish(`/room/${roomId}`, GAME_UPDATE(updatedGame));
       return true;

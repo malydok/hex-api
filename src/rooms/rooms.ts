@@ -2,7 +2,8 @@ import { Game, createGame } from './game';
 
 export interface Room {
   id: string;
-  players: string[];
+  player1: string | null;
+  player2: string | null;
   game: Game;
 }
 
@@ -11,29 +12,39 @@ const rooms: Room[] = [];
 export const addRoom = (id: string) =>
   void rooms.push({
     id,
-    players: [],
+    player1: null,
+    player2: null,
     game: createGame(),
   });
 
 export const getRoom = (id: string) => rooms.find(room => room.id === id);
 
-export const addPlayer = (roomId: string, player: string) => {
+export const addPlayer = (roomId: string, clientId: string) => {
   const possibleRoom = getRoom(roomId);
   if (!possibleRoom) {
     throw Error(`No such room ${roomId}`);
   }
-  if (possibleRoom.players.length >= 2) {
+  if (possibleRoom.player1 && possibleRoom.player2) {
     throw Error(`Room full ${roomId}`);
   }
-  possibleRoom.players.push(player);
+  if (!possibleRoom.player1) {
+    possibleRoom.player1 = clientId;
+  } else if (!possibleRoom.player2) {
+    possibleRoom.player2 = clientId;
+  }
+  return possibleRoom;
 };
 
-export const removePlayer = (roomId: string, playerId: string) => {
+export const removePlayer = (roomId: string, clientId: string) => {
   const possibleRoom = getRoom(roomId);
   if (!possibleRoom) {
     throw Error(`No such room ${roomId}`);
   }
-  possibleRoom.players = possibleRoom.players.filter(
-    player => player !== playerId,
-  );
+  if (possibleRoom.player1 === clientId) {
+    possibleRoom.player1 = null;
+  }
+  if (possibleRoom.player2 === clientId) {
+    possibleRoom.player2 = null;
+  }
+  return possibleRoom;
 };
