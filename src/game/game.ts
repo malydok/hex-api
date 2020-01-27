@@ -1,7 +1,7 @@
 import { Game, SelectFieldArgs, Board } from './game.types';
 import { checkWinner } from './checkWinner';
 
-export const SIZE = 11;
+const SIZE = 11;
 
 export const createBoard = (): Board =>
   Array.from({ length: SIZE }, () =>

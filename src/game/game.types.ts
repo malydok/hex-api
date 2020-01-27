@@ -1,8 +1,10 @@
 export type Player = 'player1' | 'player2';
 
-type Field = undefined | Player;
+export type Field = undefined | Player;
 
 export type Board = Field[][];
+
+export type BoardPosition = [number, number];
 
 export type Game = {
   board: Board;

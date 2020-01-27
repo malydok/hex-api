@@ -1,22 +1,23 @@
-import { Game, Board, Player } from './game.types';
-import { SIZE } from './game';
+import { Board, Player } from './game.types';
 import { flipBoard } from './flipBoard';
+import { isRouteComplete } from './isRouteComplete';
 
-const checkPlayersBoard = (board: Board, player: Player) => {
+const didPlayerWin = (board: Board, player: Player) => {
   const startRow = board[0];
-  const endRow = board[SIZE - 1];
+  const endRow = board[board.length - 1];
   if (!startRow.includes(player) || !endRow.includes(player)) {
     return false;
   }
-  startRow.forEach((field, fieldIndex) => {
-    if (field === player) {
-      traverseBoard(player, 0, fieldIndex);
+  for (let fieldIndex = 0; fieldIndex < startRow.length; fieldIndex++) {
+    const field = startRow[fieldIndex];
+    if (field === player && isRouteComplete(board, player, [0, fieldIndex])) {
+      return true;
     }
-  });
+  }
   return false;
 };
 
 export const checkWinner = (board: Board, player: Player) => {
   const boardToCheck = player === 'player2' ? flipBoard(board) : board;
-  return checkPlayersBoard(boardToCheck, player);
+  return didPlayerWin(boardToCheck, player);
 };
