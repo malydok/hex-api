@@ -4,7 +4,7 @@ import { addRoomRoutes } from './rooms/addRoomRoutes';
 
 export const startServer = async () => {
   const server = new Hapi.Server({
-    port: 3000,
+    port: process.env.PORT || 3000,
     host: 'localhost',
   });
 
