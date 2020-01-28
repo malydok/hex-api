@@ -1,1 +1,1 @@
-web: node dist/index.js
+web: tsc && npm start
