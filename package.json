@@ -1,17 +1,21 @@
 {
   "name": "hex-api",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "author": "Marek <https://github.com/malydok>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/malydok/hex-api"
+  },
   "scripts": {
-    "start": "tsc && concurrently \"npm:watch-ts\" \"npm:watch-node\"",
+    "start": "node dist/index.js",
+    "dev": "tsc && concurrently \"npm:watch-ts\" \"npm:watch-node\"",
     "watch-ts": "tsc -w",
     "watch-node": "nodemon dist/index.js",
     "test": "jest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@hapi/boom": "^7.4.11",
     "@hapi/hapi": "^18.4.0",
