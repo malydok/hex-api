@@ -5,11 +5,17 @@ import { addRoomRoutes } from './rooms/addRoomRoutes';
 export const startServer = async () => {
   const server = new Hapi.Server({
     port: process.env.PORT || 3000,
-    host: 'localhost',
   });
 
   await server.register(Nes as any);
   await server.start();
+  server.route({
+    method: 'GET',
+    path: '/',
+    handler(request, h) {
+      return 'Hi there!';
+    },
+  });
   addRoomRoutes(server);
   console.log('Server running on %s', server.info.uri);
 };
