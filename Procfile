@@ -1,1 +1,0 @@
-web: tsc && npm start
