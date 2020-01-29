@@ -5,6 +5,7 @@ import { ROOMS_CHANGE, ROOMS_SETUP } from '../roomEvents';
 
 export const roomListSubscription = (server: Hapi.Server) => {
   subscribeToRoomsUpdates(rooms => {
+    console.log(rooms);
     server.publish(`/room`, ROOMS_CHANGE(rooms));
   });
 

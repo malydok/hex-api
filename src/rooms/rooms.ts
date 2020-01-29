@@ -1,35 +1,13 @@
 import { Room, RoomDigest, RoomSubscribe, DeletionTimers } from './room.types';
 import { createGame } from '../game/game';
 
-export const rooms: Room[] = [];
+export let rooms: Room[] = [];
 
 export const getRoomsWithoutGame = (): RoomDigest[] =>
   rooms.map(room => ({
     ...room,
     game: null,
   }));
-
-const removeRoom = (roomIndex: number) => {
-  rooms.splice(roomIndex, 1);
-  roomsUpdated();
-};
-
-const DELETION_TIMEOUT = 5000;
-const deletionTimers: DeletionTimers = {};
-const markForDeletion = (room: Room) => {
-  const roomIndex = rooms.findIndex(({ id }) => id === room.id);
-  if (roomIndex === -1) {
-    return;
-  }
-  deletionTimers[room.id] = setTimeout(() => {
-    removeRoom(roomIndex);
-    delete deletionTimers[room.id];
-  }, DELETION_TIMEOUT);
-};
-const saveFromDeletion = (room: Room) => {
-  clearTimeout(deletionTimers[room.id]);
-  delete deletionTimers[room.id];
-};
 
 const roomsSubscribers: RoomSubscribe[] = [];
 
@@ -39,12 +17,36 @@ const roomsUpdated = () =>
 export const subscribeToRoomsUpdates = (callback: RoomSubscribe) =>
   void roomsSubscribers.push(callback);
 
+// TODO: throttle
+const cleanRooms = () => {
+  rooms = rooms.filter(room => !room.forDeletion);
+  roomsUpdated();
+};
+
+const DELETION_TIMEOUT = 5000;
+const deletionTimers: DeletionTimers = {};
+const markForDeletion = (room: Room) => {
+  room.forDeletion = true;
+  deletionTimers[room.id] = setTimeout(() => {
+    cleanRooms();
+    delete deletionTimers[room.id];
+  }, DELETION_TIMEOUT);
+  console.log(`${room.id} marked for deletion`);
+};
+const saveFromDeletion = (room: Room) => {
+  room.forDeletion = false;
+  clearTimeout(deletionTimers[room.id]);
+  delete deletionTimers[room.id];
+  console.log(`${room.id} restored from deletion`);
+};
+
 export const addRoom = (id: string) => {
   rooms.push({
     id,
     player1: null,
     player2: null,
     game: createGame(),
+    forDeletion: false,
   });
   roomsUpdated();
 };

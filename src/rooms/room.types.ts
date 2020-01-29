@@ -4,6 +4,7 @@ export interface RoomDigest {
   id: string;
   player1: string | null;
   player2: string | null;
+  forDeletion: boolean;
 }
 
 export interface Room extends RoomDigest {
