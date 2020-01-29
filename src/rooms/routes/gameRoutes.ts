@@ -31,6 +31,9 @@ export const gameRoutes = (server: Hapi.Server) => {
       if (!possibleRoom) {
         return Boom.notFound('No such room!');
       }
+      if (possibleRoom.player1 !== client && possibleRoom.player2 !== client) {
+        return Boom.forbidden('You scummy hacker!');
+      }
       const updatedGame = selectField({
         game: possibleRoom.game,
         player: possibleRoom.player1 === client ? 'player1' : 'player2',

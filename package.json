@@ -21,6 +21,7 @@
     "@hapi/boom": "^7.4.11",
     "@hapi/hapi": "^18.4.0",
     "@hapi/nes": "^11.2.2",
+    "human-readable-ids": "^1.0.4",
     "typesafe-hapi": "^4.0.1",
     "typesafe-joi": "^2.1.0",
     "uuid": "^3.3.3"

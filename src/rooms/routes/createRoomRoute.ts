@@ -1,16 +1,16 @@
 import * as Hapi from 'typesafe-hapi';
-import * as UUID from 'uuid';
+import { hri } from 'human-readable-ids';
 import { addRoom } from '../rooms';
-import { createRoomSubscriptions } from '../createRoomSubscriptions';
+import { roomSubscription } from '../subscriptions/roomSubscription';
 
 export const createRoomRoute = (server: Hapi.Server) => {
   server.route({
     method: 'GET',
     path: '/room/create',
     handler() {
-      const roomId = UUID.v4();
+      const roomId = hri.random();
       addRoom(roomId);
-      createRoomSubscriptions(server, roomId);
+      roomSubscription(server, roomId);
       console.log('room created', roomId);
       return { roomId };
     },

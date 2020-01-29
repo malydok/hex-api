@@ -17,6 +17,6 @@
       "joi": ["node_modules/typesafe-joi"]
     }
   },
-  "include": ["src/**/*", "index.d.ts"],
+  "include": ["src/**/*", "typesafe-hapi.d.ts", "human-readable-ids.d.ts"],
   "exclude": ["node_modules"]
 }
