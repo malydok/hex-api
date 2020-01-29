@@ -9,13 +9,6 @@ export const startServer = async () => {
 
   await server.register(Nes as any);
   await server.start();
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler(request, h) {
-      return 'Hi there!';
-    },
-  });
   addRoomRoutes(server);
   console.log('Server running on %s', server.info.uri);
 };
