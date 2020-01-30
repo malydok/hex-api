@@ -1,3 +1,4 @@
+import { throttle } from 'lodash';
 import { Room, RoomDigest, RoomSubscribe, DeletionTimers } from './room.types';
 import { createGame } from '../game/game';
 
@@ -17,11 +18,11 @@ const roomsUpdated = () =>
 export const subscribeToRoomsUpdates = (callback: RoomSubscribe) =>
   void roomsSubscribers.push(callback);
 
-// TODO: throttle
-const cleanRooms = () => {
+const cleanRooms = throttle(() => {
   rooms = rooms.filter(room => !room.forDeletion);
+  console.log('Rooms cleaned');
   roomsUpdated();
-};
+}, 5000);
 
 const DELETION_TIMEOUT = 5000;
 const deletionTimers: DeletionTimers = {};
