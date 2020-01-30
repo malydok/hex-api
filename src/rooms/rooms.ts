@@ -52,6 +52,11 @@ export const addRoom = (id: string) => {
   roomsUpdated();
 };
 
+export const resetGame = (room: Room) => {
+  room.game = createGame();
+  return room.game;
+};
+
 export const getRoom = (id: string) => rooms.find(room => room.id === id);
 
 export const addPlayer = (roomId: string, clientId: string) => {

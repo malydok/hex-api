@@ -1,5 +1,5 @@
 import { RoomDigest, Room } from './room.types';
-import { Game } from '../game/game.types';
+import { Game, Player } from '../game/game.types';
 
 const createEvent = <T>(name: string) => (payload?: T) => ({
   type: name,
@@ -18,3 +18,6 @@ export const CHAT_MESSAGE = createEvent<{ message: string; client: string }>(
 );
 
 export const GAME_UPDATE = createEvent<Game>('GAME_UPDATE');
+export const GAME_FORFEIT = createEvent<{ game: Game; loser: Player }>(
+  'GAME_UPDATE',
+);
