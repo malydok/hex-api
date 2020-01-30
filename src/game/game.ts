@@ -10,7 +10,7 @@ export const createBoard = (): Board =>
 
 export const createGame = (): Game => ({
   board: createBoard(),
-  turn: 'player1',
+  turn: Math.random() > 0.5 ? 'player1' : 'player2',
 });
 
 export const selectField = ({
