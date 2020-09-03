@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@hapi/boom": "^7.4.11",
-    "@hapi/hapi": "^18.4.0",
+    "@hapi/hapi": "^19.1.1",
     "@hapi/nes": "^11.2.2",
     "human-readable-ids": "^1.0.4",
     "lodash": "^4.17.15",
